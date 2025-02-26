@@ -42,7 +42,7 @@ Create a .env file in the root directory and add the following:
 TIMESCALEDB_URI=postgresql+psycopg2://<user>:<password>@<host>:<port>/<database>
 ```
 
-Replace <user>, <password>, <host>, <port>, and <database> with your TimescaleDB credentials.
+Replace `user`, `password`, `host`, `port`, and `database` with your TimescaleDB credentials.
 
 ### 4. (Optional) Start TimescaleDB with docker
 ```bash
@@ -64,9 +64,9 @@ To add a new data source:
 ```bash
 python cli.py datalake add --name <data_source_name> --start-date <start_date> --end-date <end_date>
 ```
-- <data_source_name>: Name of the data source (e.g., binance, bybit, yfinance).
-- <start_date>: Start date for data collection (default: 10 years ago).
-- <end_date>: End date for data collection (default: today).
+- `data_source_name`: Name of the data source (e.g., binance, bybit, yfinance).
+- `start_date`: Start date for data collection (default: 10 years ago).
+- `end_date`: End date for data collection (default: today).
 
 Examples:
 ```bash
