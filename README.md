@@ -1,5 +1,9 @@
 # Trading Data Lake
 
+<img src="trading-data-lake.jpg" width="500" height="300" />
+
+---
+
 This repository provides a system for collecting, storing, and managing financial market data from multiple sources, including Binance, Bybit, Yahoo Finance, and more. It is designed to create a centralized "data lake" that can be used for research, analysis, and trading strategy development.
 
 ## Features
