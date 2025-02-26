@@ -8,8 +8,16 @@ This repository provides a system for collecting, storing, and managing financia
 - **Data Storage:** Organizes data in a structured format for easy analysis.
 - **TimescaleDB Integration:** Enables migrating data to TimescaleDB for efficient time-series analysis.
 - **Command-Line Interface (CLI):** Provides an intuitive CLI tool for managing data.
-- **S&P 500 Data Scraping:** Collects the latest list of S&P 500 companies.
+- **S&P 500 Data Scraping:** Collects the latest list of S&P 500 companies from [wikipedia](https://en.wikipedia.org/wiki/List_of_S%26P_500_companies).
+.
 - **Logging:** Implements a logger for monitoring and debugging.
+
+## Supported Data Sources
+| Data Source Name | Description                                                                                                                      | Data Type                                             |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| Binance           | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                               | Minute-level (1-minute OHLCV bars) for perpetual futures |
+| Bybit             | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                               | Minute-level (1-minute OHLCV bars) for perpetual futures |
+| Yahoo Finance     | Daily OHLCV (Open, High, Low, Close, Volume) data for stocks (including S&P 500), ETFs, and major forex (FX) pairs. | Daily OHLCV bars for stocks, ETFs, and forex.       |
 
 ---
 
