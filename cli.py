@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 from trading_data.datalake_client import DatalakeClient
 
-DL_CLIENT = DatalakeClient(datalake_dir=os.path.join(os.getcwd(), 'data'))
+DL_CLIENT = DatalakeClient(datalake_dir=os.path.join(os.getenv('HOME'), '.trading-data'))
 # Setting the date range (last month)
 DEFAULT_END_DATE = datetime.today()
 

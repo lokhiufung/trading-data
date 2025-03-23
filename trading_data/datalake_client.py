@@ -47,7 +47,7 @@ def select_by_date_range(df, start_date, end_date):
 
 # data lake client object: for data selection, loading and transformation
 class DatalakeClient:
-    DEFAULT_DATALAKE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data'))
+    DEFAULT_DATALAKE_DIR = os.path.join(os.getenv('HOME'), '.trading-data')
     def __init__(self, datalake_dir=None):
         self.datalake_dir = datalake_dir
         if not self.datalake_dir:
