@@ -55,17 +55,17 @@ docker run -d --name timescaledb -p 5432:5432 -e POSTGRES_PASSWORD=123456 timesc
 
 ### 5. Set Up Data Directory
 
-By default, the data directory is data/. You can change this by modifying the DATALAKE_DIR variable in the .env file.
+The data directory is ~/.trading-data.
 
 ## Usage
 
-This project provides a CLI tool named datalake to manage financial data.
+Once installed, this project provides a command-line tool `trading-data` that can be run from anywhere in your terminal.
 
 ### Adding a New Data Source
 
 To add a new data source:
 ```bash
-python cli.py datalake add --name <data_source_name> --start-date <start_date> --end-date <end_date>
+trading-data datalake add --name <data_source_name> --start-date <start_date> --end-date <end_date>
 ```
 - `data_source_name`: Name of the data source (e.g., binance, bybit, yfinance).
 - `start_date`: Start date for data collection (default: 10 years ago).
@@ -73,28 +73,28 @@ python cli.py datalake add --name <data_source_name> --start-date <start_date> -
 
 Examples:
 ```bash
-python cli.py datalake add --name binance --start-date 2023-01-01 --end-date 2023-12-31
-python cli.py datalake add --name yfinance
+trading-data datalake add --name binance --start-date 2023-01-01 --end-date 2023-12-31
+trading-data datalake add --name yfinance
 ```
 
 ### Updating a Data Source
 
 To update an existing data source:
 ```bash
-python cli.py datalake update --name <data_source_name> --start-date <start_date> --end-date <end_date>
+trading-data datalake update --name <data_source_name> --start-date <start_date> --end-date <end_date>
 ```
 
 Examples:
 ```bash
-python cli.py datalake update --name binance --start-date 2024-01-01 --end-date 2024-01-31
-python cli.py datalake update --name yfinance --end-date 2024-02-15
+trading-data datalake update --name binance --start-date 2024-01-01 --end-date 2024-01-31
+trading-data datalake update --name yfinance --end-date 2024-02-15
 ```
 
 ### Migrating Data to TimescaleDB
 
 To migrate data to TimescaleDB:
 ```bash
-python cli.py datalake migrate --name <data_source_name> --ver <version_name>
+trading-data datalake migrate --name <data_source_name> --ver <version_name>
 ```
 
 - <data_source_name>: Data source name (binance, bybit, yfinance).
@@ -102,21 +102,21 @@ python cli.py datalake migrate --name <data_source_name> --ver <version_name>
 
 Examples:
 ```bash
-python cli.py datalake migrate --name binance --ver min_bar
-python cli.py datalake migrate --name yfinance --ver day_bar
+trading-data datalake migrate --name binance --ver min_bar
+trading-data datalake migrate --name yfinance --ver day_bar
 ```
 
 ### Getting Data Source Information
 
 To retrieve information about a data source:
 ```bash
-python cli.py datalake info --name <data_source_name> --ver <version_name>
+trading-data datalake info --name <data_source_name> --ver <version_name>
 ```
 Examples:
 
 ```bash
-python cli.py datalake info --name binance --ver min_bar
-python cli.py datalake info --name yfinance --ver day_bar
+trading-data datalake info --name binance --ver min_bar
+trading-data datalake info --name yfinance --ver day_bar
 ```
 
 ## Data Organization
