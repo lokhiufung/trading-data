@@ -173,3 +173,5 @@ cython_debug/
 
 /logs
 /data/
+
+mytest*.py

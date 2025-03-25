@@ -2,7 +2,6 @@
 
 <img src="trading-data-lake.jpg" width="500" height="300" />
 
-
 This repository provides a system for collecting, storing, and managing financial market data from multiple sources, including Binance, Bybit, Yahoo Finance, and more. It is designed to create a centralized "data lake" that can be used for research, analysis, and trading strategy development.
 
 ## Features
@@ -119,6 +118,18 @@ trading-data datalake info --name binance --ver min_bar
 trading-data datalake info --name yfinance --ver day_bar
 ```
 
+### Deleting a Data Source
+
+To delete an entire data source and all its associated data:
+```bash
+trading-data datalake delete --name <data_source_name>
+```
+
+Example:
+```bash
+trading-data datalake delete --name bybit
+```
+
 ## Data Organization
 
 The data lake follows this directory structure:
@@ -168,7 +179,6 @@ print('Available Assets:')
 for asset_type, assets in data_menu.items():
     print(f'{asset_type}: {len(assets)} assets')
 ```
-
 
 ## Notes
 - Error Handling: Basic error handling is included in the CLI commands, but additional robustness may be needed for production use.

@@ -141,6 +141,14 @@ class DatalakeClient:
             index=False
         )
 
+    def delete_data_source(self, data_soure):
+        # delete the data source
+        data_menu_file = os.path.join(self.datalake_dir, f'{data_soure}_data_menu.yaml')
+        os.remove(data_menu_file)
+        # delete the data source directory
+        data_source_dir = os.path.join(self.datalake_dir, data_soure)
+        os.rmdir(data_source_dir)
+        
     def add_data_source(self, data_source, data_menu):
         assert not data_source in self.get_data_sources()
 
