@@ -92,6 +92,14 @@ def add(name, start_date, end_date):
 
 
 @datalake.command()
+@click.option('--name', required=True, help='The name of the data source to add')
+def delete(name):
+    # prompt for confirmation
+    click.confirm(f'Are you sure you want to delete data source={name}?', abort=True)
+    DL_CLIENT.delete_data_source(name)
+
+
+@datalake.command()
 @click.option('--name', required=True, help='The name of the data source to migrate')
 @click.option('--ver', required=True, help='The name of the ver to mirgrate')
 def migrate(name, ver):
