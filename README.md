@@ -90,6 +90,7 @@ trading-data datalake update --name yfinance --end-date 2024-02-15
 ```
 
 You can also update selected pdts. If the pdts are not in the current data menu, they will be added in to the data menu.
+*Currently this feaute is ONLY for stock products for `ib` data source.*
 Examples
 ```bash
 trading-data datalake update --name ib --start-date 2025-02-15 --pdts DUK
