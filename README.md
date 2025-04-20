@@ -89,6 +89,13 @@ trading-data datalake update --name binance --start-date 2024-01-01 --end-date 2
 trading-data datalake update --name yfinance --end-date 2024-02-15
 ```
 
+You can also update selected pdts. If the pdts are not in the current data menu, they will be added in to the data menu.
+Examples
+```bash
+trading-data datalake update --name ib --start-date 2025-02-15 --pdts DUK
+trading-data datalake update --name ib --start-date 2025-02-15 --pdts TQQQ,SQQQ,VOO
+```
+
 ### Migrating Data to TimescaleDB
 
 To migrate data to TimescaleDB:
@@ -191,3 +198,9 @@ If you’d like to contribute, feel free to open a pull request or submit an iss
 ## License
 
 This project is open-source. See the LICENSE file for more details.
+
+## 📌 Planned Features
+
+| Feature | User Story | Status |
+|--------|------------|--------|
+| Partial Data Update by Symbols | As a strategy developer, I want to update only a few selected stocks (e.g., AAPL, MSFT) instead of the entire data source, so that I can speed up the data refresh process during targeted strategy development. | ⏳ Planned |

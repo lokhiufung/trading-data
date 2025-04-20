@@ -105,7 +105,7 @@ def add_data(dl_client: DatalakeClient, start_date: str, end_date: str):
                     logger.error(f'Error downloading {asset=} on {date_str}: {err}')
 
 
-def update_data(dl_client: DatalakeClient, start_date: str, end_date: str):
+def update_data(dl_client: DatalakeClient, start_date: str, end_date: str, pdts=None):
     data_menu = dl_client.get_data_menu(DATA_SOURCE)
     for asset_type in data_menu:
         for asset in data_menu[asset_type]:
