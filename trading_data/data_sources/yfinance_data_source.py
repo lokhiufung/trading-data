@@ -26,7 +26,7 @@ def download_market_data(ticker, start_date, end_date):
     return data
 
 
-def update_data(dl_client: DatalakeClient, start_date, end_date):
+def update_data(dl_client: DatalakeClient, start_date, end_date, pdts=None):
     data_menu = dl_client.get_data_menu(DATA_SOURCE)
     for asset_type in data_menu:
         for asset in data_menu[asset_type]:

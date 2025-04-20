@@ -67,7 +67,7 @@ def download_market_data(asset: str, date: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def update_data(dl_client: DatalakeClient, start_date: str, end_date: str):
+def update_data(dl_client: DatalakeClient, start_date: str, end_date: str, pdts=None):
     data_menu = dl_client.get_data_menu(DATA_SOURCE)
     for asset_type in data_menu:
         for asset in data_menu[asset_type]:
@@ -146,10 +146,3 @@ def add_data(dl_client: DatalakeClient, start_date: str, end_date: str):
 def get_data(self):
     pass
 
-
-
-if __name__ == '__main__':
-    from research.data.datalake_client import DatalakeClient
-
-    dl_client = DatalakeClient()
-    add_data()

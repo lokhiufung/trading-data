@@ -94,6 +94,11 @@ class DatalakeClient:
             data_menu = [item for sublist in data_menu.values() for item in sublist]
         return data_menu
     
+    def update_data_menu(self, data_source, data_menu):
+        # load the data_menu first
+        with open(os.path.join(self.datalake_dir, f'{data_source}_data_menu.yaml'), 'w') as f:
+            yaml.safe_dump(data_menu, f)
+        
     def get_index(self, data_source):
         index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.csv')
         df_index = pd.read_csv(index_file_path, header=0)

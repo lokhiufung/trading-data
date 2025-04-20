@@ -4,9 +4,8 @@ import pandas as pd
 from tqdm import tqdm
 
 # Import your data lake client and logger as necessary
-from research.data.datalake_client import DatalakeClient
-from research.data.common.data_cleansing import forward_fill_missing_bars
-from research.logger import get_logger
+from trading_data.datalake_client import DatalakeClient
+from trading_data.logger import get_logger
 
 
 DATA_SOURCE = 'firstrate_future_unadjusted'
@@ -62,7 +61,7 @@ def add_data(dl_client: DatalakeClient, start_date: str, end_date: str):
                 logger.error(f'Error encountered when extracting {asset=}: {e}')
 
 
-def update_data(dl_client: DatalakeClient, start_date: str, end_date: str):
+def update_data(dl_client: DatalakeClient, start_date: str, end_date: str, pdts=None):
     data_menu = dl_client.get_data_menu(DATA_SOURCE)
     for asset_type in data_menu:
         for asset in tqdm(data_menu[asset_type]):

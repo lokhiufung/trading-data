@@ -41,12 +41,19 @@ def datalake():
 @click.option('--name', required=True, help='The name of the data source to update')
 @click.option('--start-date', required=False, default=None, help='The starting date of new data. Default to be the date of trailing half year from the ending date')
 @click.option('--end-date', required=False, default=None, help='The ending date of the new data. Default to be today')
-def update(name, start_date, end_date):
+@click.option('--pdts', required=False, default=None, help='The pdts to update. Default to be all pdts in the data source')
+def update(name, start_date, end_date, pdts):
     """
     Update an existing data source.
 
     This command allows you to update an existing data source specified by its name.
     """
+    if pdts:
+        if name != 'ib':
+            print('Currently `--pdts` is only supported for ib_data_source')
+            return
+        pdts = pdts.split(',')
+    
     data_source = import_module(f'trading_data.data_sources.{name}_data_source')
     if end_date is None:
         end_date = datetime.today()
@@ -61,7 +68,7 @@ def update(name, start_date, end_date):
     if not isinstance(end_date, str):
         end_date = datetime.strftime(end_date, "%Y-%m-%d")
 
-    data_source.update_data(DL_CLIENT, start_date, end_date)
+    data_source.update_data(DL_CLIENT, start_date, end_date, pdts)
 
 
 @datalake.command()
