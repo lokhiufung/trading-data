@@ -192,6 +192,19 @@ for asset_type, assets in data_menu.items():
 - Error Handling: Basic error handling is included in the CLI commands, but additional robustness may be needed for production use.
 - Date Validation: Ensure the specified date range is correct before executing commands.
 
+## Migration Guide
+
+To migrate your data files from the legacy v1 format to the new v2 format, use the provided migration script:
+
+```bash
+python scripts/migrate_to_v2.py
+```
+
+This script will convert your files to the new naming convention and structure expected by the latest version of the data lake.
+
+`v1` will not be supported after this update.
+
+
 ## Contributing
 
 If you’d like to contribute, feel free to open a pull request or submit an issue.
