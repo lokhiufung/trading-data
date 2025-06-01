@@ -84,7 +84,11 @@ class DatalakeClient:
             return start_date, end_date
     
     def get_data_sources(self):
-        return os.listdir(self.datalake_dir)
+        return [
+            filename.replace('_data_menu.yaml', '')
+            for filename in os.listdir(self.datalake_dir)
+            if filename.endswith('_data_menu.yaml')
+        ]
     
     def get_data_menu(self, data_source, flatten=False):
         # load the data_menu first
@@ -171,7 +175,7 @@ class DatalakeClient:
             os.mkdir(ver_dir)
         
         ver = self._convert_ver_name_to_ver(ver_name)
-        file_path = self.get_file_path(data_source, asset, ver, date=date)
+        file_path = self.get_file_path(data_source, asset, ver, asset_type=asset_type, date=date)
 
         assert not os.path.exists(file_path)  # ensure the adding data only at initialization, use update data later on
 
@@ -200,10 +204,10 @@ class DatalakeClient:
         assert asset_type in data_menu
         assert asset in data_menu[asset_type]
         
-        file_path = self.get_file_path(data_source, asset, ver, date=date)
+        file_path = self.get_file_path(data_source, asset, ver, asset_type=asset_type, date=date)
 
         if how == 'merge':
-            old_data = self.get_table(data_source, asset, set_index=True)
+            old_data = self.get_table(data_source, asset, asset_type=asset_type, set_index=True)
             self._merge_and_write_data(file_path, old_data, new_data=data)
         elif how == 'replace':
             data.to_csv(
@@ -241,7 +245,7 @@ class DatalakeClient:
             header=True,
         )
 
-    def get_file_path(self, data_source, ticker, ver, date=None):
+    def get_file_path(self, data_source, ticker, ver, asset_type, date=None):
         if ver.value == DataVersionType.MIN_BAR.value:
             partition_name = 'min_bar'
         elif ver.value == DataVersionType.HOUR_BAR.value:
@@ -252,9 +256,9 @@ class DatalakeClient:
             raise ValueError(f'{ver=} is not available now')
         
         if date is None:
-            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{ticker}_historical_data.csv')
+            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_historical_data.csv')
         else:
-            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{ticker}_{date}_historical_data.csv')
+            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_{date}_historical_data.csv')
     
     def get_table(
             self, 
@@ -266,13 +270,14 @@ class DatalakeClient:
             columns: typing.List[str]=None,
             set_index: bool=False,
             date: str=None,
+            asset_type: str='stock',
         ) -> pd.DataFrame:
 
         ver = self._convert_ver_name_to_ver(ver_name)
         
         if date:
             # REMINDER: for miniute level data, files are seperated by dates
-            file_path = self.get_file_path(data_source, ticker, ver=ver, date=date)
+            file_path = self.get_file_path(data_source, ticker, ver=ver, asset_type=asset_type, date=date)
             df = pd.read_csv(file_path, header=0)
             if columns is not None and isinstance(columns, list):
                 df = df[columns]
@@ -282,7 +287,7 @@ class DatalakeClient:
             return df
         else:
             # REMINDER: for daily data, files are seperated by assets only
-            file_path = self.get_file_path(data_source, ticker, ver=ver)
+            file_path = self.get_file_path(data_source, ticker, ver=ver, asset_type=asset_type)
             df = pd.read_csv(file_path, header=0)
             if start_date is not None or end_date is not None:
                 df = select_by_date_range(df, start_date, end_date)

@@ -27,7 +27,7 @@ def add_data(dl_client: DatalakeClient, start_date: str, end_date: str):
     tickers = ['YM', 'NQ', 'ES']  # TEMP: hard-code for this moment
 
     data_menu = {
-        'future': list(tickers),
+        'futures': list(tickers),
     }
 
     # add_data in datalake

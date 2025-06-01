@@ -204,4 +204,4 @@ This project is open-source. See the LICENSE file for more details.
 
 | Feature | User Story | Status |
 |--------|------------|--------|
-| Partial Data Update by Symbols | As a strategy developer, I want to update only a few selected stocks (e.g., AAPL, MSFT) instead of the entire data source, so that I can speed up the data refresh process during targeted strategy development. | ⏳ Planned |
+| Partial Data Update by Symbols | As a strategy developer, I want to update only a few selected stocks (e.g., AAPL, MSFT) instead of the entire data source, so that I can speed up the data refresh process during targeted strategy development. | ⏳ Done |
