@@ -15,11 +15,13 @@ This repository provides a system for collecting, storing, and managing financia
 - **Logging:** Implements a logger for monitoring and debugging.
 
 ## Supported Data Sources
-| Data Source Name | Description                                                                                                                      | Data Type                                             |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
-| Binance           | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                               | Minute-level (1-minute OHLCV bars) for perpetual futures |
-| Bybit             | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                               | Minute-level (1-minute OHLCV bars) for perpetual futures |
-| Yahoo Finance     | Daily OHLCV (Open, High, Low, Close, Volume) data for stocks (including S&P 500), ETFs, and major forex (FX) pairs. | Daily OHLCV bars for stocks, ETFs, and forex.       |
+| Data Source Name         | Description                                                                                                                      | Data Type                                             |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| Binance                 | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                                   | Minute-level (1-minute OHLCV bars) for perpetual futures |
+| Bybit                   | Cryptocurrency perpetual futures tick data converted into 1-minute OHLCV bars.                                                   | Minute-level (1-minute OHLCV bars) for perpetual futures |
+| Yahoo Finance           | Daily OHLCV (Open, High, Low, Close, Volume) data for stocks (including S&P 500), ETFs, and major forex (FX) pairs.             | Daily OHLCV bars for stocks, ETFs, and forex.          |
+| FirstRate Data          | Historical intraday data (e.g., 1-minute bars) for futures from FirstRateData.com.                                    | Minute-level and daily OHLCV for stocks and futures    |
+| Trader Workstation (IB) | Historical data via Interactive Brokers TWS API. Requires running TWS or IB Gateway.                              | Daily and intraday data for stocks, ETFs, and futures  |
 
 ---
 
