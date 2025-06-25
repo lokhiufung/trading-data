@@ -217,6 +217,8 @@ This project is open-source. See the LICENSE file for more details.
 
 ## 📌 Planned Features
 
-| Feature | User Story | Status |
-|--------|------------|--------|
-| Partial Data Update by Symbols | As a strategy developer, I want to update only a few selected stocks (e.g., AAPL, MSFT) instead of the entire data source, so that I can speed up the data refresh process during targeted strategy development. | ⏳ Done |
+| Feature                          | User Story                                                                                                                                                   | Status |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
+| Partial Data Update by Symbols   | As a strategy developer, I want to update only a few selected stocks (e.g., AAPL, MSFT) instead of the entire data source, so that I can speed up the data refresh process during targeted strategy development. | ✅ Done |
+| Parquet File Format Migration    | As a data engineer, I want to store all data files in efficient Parquet format instead of CSV, so that I can reduce storage footprint and improve I/O performance. This includes migrating old CSV data. | ⏳ Planned |
+| Cloud Datalake Integration       | As a user working on multiple machines, I want to sync the data lake to a cloud bucket (e.g., AWS S3), so that I can share and access data across environments seamlessly. | ⏳ Planned |

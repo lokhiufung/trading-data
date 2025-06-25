@@ -104,14 +104,14 @@ class DatalakeClient:
             yaml.safe_dump(data_menu, f)
         
     def get_index(self, data_source):
-        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.csv')
-        df_index = pd.read_csv(index_file_path, header=0)
+        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.parquet')
+        df_index = pd.read_parquet(index_file_path)
         return df_index
 
     def list_indexes(self, data_source):
-        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.csv')
+        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.parquet')
         if os.path.exists(index_file_path):
-            df_index = pd.read_csv(index_file_path, header=0)
+            df_index = pd.read_parquet(index_file_path)
             return list(df_index.columns)
         return []
 
@@ -131,7 +131,7 @@ class DatalakeClient:
         return df_index
 
     def create_index(self, data_source, index_name, index_function):
-        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.csv')
+        index_file_path = os.path.join(self.datalake_dir, f'{data_source}/_index.parquet')
 
         print(f'create a new index {index_name}')
         # create a new index
@@ -139,16 +139,12 @@ class DatalakeClient:
         if os.path.exists(index_file_path):
             print(f'updating the new index {index_name}')
             # load the old index first
-            df_index_old = pd.read_csv(index_file_path, header=0)
+            df_index_old = pd.read_parquet(index_file_path)
             if index_name in df_index_old.columns:
                 del df_index_old[index_name]  # replace the old index
             df_index = df_index_old.merge(df_index, on='ticker')
 
-        df_index.to_csv(
-            index_file_path,
-            header=True,
-            index=False
-        )
+        df_index.to_parquet(index_file_path, index=False)
 
     def delete_data_source(self, data_soure):
         # delete the data source
@@ -186,11 +182,7 @@ class DatalakeClient:
         assert asset_type in data_menu
         assert asset in data_menu[asset_type]
         
-        data.to_csv(
-            file_path,
-            index=True,
-            header=True,
-        )
+        data.to_parquet(file_path, index=True)
 
     def update_data(self, data_source: str, asset_type: str, asset: str, data: pd.DataFrame, ver_name, date: str=None, how='merge'):
         assert data_source in self.get_data_sources()
@@ -210,11 +202,7 @@ class DatalakeClient:
             old_data = self.get_table(data_source, asset, asset_type=asset_type, set_index=True)
             self._merge_and_write_data(file_path, old_data, new_data=data)
         elif how == 'replace':
-            data.to_csv(
-                file_path,
-                index=True,
-                header=True,
-            )
+            data.to_parquet(file_path, index=True)
         else:
             raise ValueError(f'{how=} is not allowed.')
         
@@ -239,11 +227,7 @@ class DatalakeClient:
         merged_data = merged_data[~merged_data.index.duplicated(keep='last')]
 
         # merged_data = merged_data.reset_index(drop=True)
-        merged_data.to_csv(
-            file_path,
-            index=True,
-            header=True,
-        )
+        merged_data.to_parquet(file_path, index=True)
 
     def get_file_path(self, data_source, ticker, ver, asset_type, date=None):
         if ver.value == DataVersionType.MIN_BAR.value:
@@ -256,9 +240,9 @@ class DatalakeClient:
             raise ValueError(f'{ver=} is not available now')
         
         if date is None:
-            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_historical_data.csv')
+            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_historical_data.parquet')
         else:
-            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_{date}_historical_data.csv')
+            return os.path.join(self.datalake_dir, f'{data_source}/{partition_name}/{asset_type}_{ticker}_{date}_historical_data.parquet')
     
     def get_table(
             self, 
@@ -276,9 +260,9 @@ class DatalakeClient:
         ver = self._convert_ver_name_to_ver(ver_name)
         
         if date:
-            # REMINDER: for miniute level data, files are seperated by dates
+            # REMINDER: for minute level data, files are separated by dates
             file_path = self.get_file_path(data_source, ticker, ver=ver, asset_type=asset_type, date=date)
-            df = pd.read_csv(file_path, header=0)
+            df = pd.read_parquet(file_path)
             if columns is not None and isinstance(columns, list):
                 df = df[columns]
             if set_index:
@@ -286,9 +270,9 @@ class DatalakeClient:
                 df.set_index('ts', inplace=True)
             return df
         else:
-            # REMINDER: for daily data, files are seperated by assets only
+            # REMINDER: for daily data, files are separated by assets only
             file_path = self.get_file_path(data_source, ticker, ver=ver, asset_type=asset_type)
-            df = pd.read_csv(file_path, header=0)
+            df = pd.read_parquet(file_path)
             if start_date is not None or end_date is not None:
                 df = select_by_date_range(df, start_date, end_date)
             if columns is not None and isinstance(columns, list):
@@ -369,7 +353,7 @@ class DatalakeClient:
             for file_path in tqdm(file_paths, desc=f'{pdt=}'):
                 # _, date = extract_info_from_filename(file_path.split('/')[-1])
                 # 1. load dataframe
-                df = pd.read_csv(file_path, header=0)
+                df = pd.read_parquet(file_path)
                 bars = df[['ts', 'open', 'high', 'low', 'close', 'volume']].to_dict(orient='records')
                 # add product id and data source id to the bars
                 bars = [{'product_id': product.id, 'data_source_id': data_source_obj.id, 'bar_type': ver_name, **bar} for bar in bars]
