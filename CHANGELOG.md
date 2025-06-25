@@ -1,3 +1,14 @@
+## [3.0.0] - 2025-06-25
+
+### ⚠️ Breaking Changes
+- Migrated all stored data files from CSV to **Parquet** format.
+  - All systems expecting `.csv` files must be updated to read `.parquet`.
+
+### ✨ Improvements
+- `DatalakeClient` and related utilities now read/write `.parquet` files instead of `.csv`.
+- Added a migration script to convert all existing CSV files to Parquet and verify their integrity.
+- Automatically removes old CSV files after successful conversion to avoid redundancy.
+
 ## [2.0.0] - 2025-06-01
 
 ### ⚠️ Breaking Changes
